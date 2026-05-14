@@ -1,0 +1,126 @@
+# _view_domain_labeling_3j2w.cxc
+# Colors CHIKV E2 structural domains on PDB 3J2W (full virion cryo-EM structure).
+# Exports top-down and side views plus a color key legend.
+#
+# NOTE: Named views (e.g. 3j2w_top_down) are stored in the .cxs session file.
+# On first run, define and save them interactively before running this script.
+# On subsequent runs, the session is opened first to restore those camera positions.
+
+# === WINDOW ===
+windowsize 600 600
+
+# === LOAD STRUCTURE ===
+# Fetch fresh from RCSB. On first run, define named views interactively
+# (e.g. `view name 3j2w_top_down`) and save the session, then uncomment the
+# two lines below to restore those views on subsequent runs.
+open ../sessions/3j2w_domain_labeling.cxs
+close all
+open ../cache/3j2w.cif format mmcif logInfo false
+
+# === LOAD CAMERA VIEWS ===
+# Loads named views like 3j2w_top_down from views/3j2w_views.cxc if it exists,
+# making the view definitions portable across machines/users without needing
+# the .cxs session. To (re)generate the file: in the ChimeraX GUI, orient the
+# camera, run `view name 3j2w_top_down` for each angle you want, then run
+# `runscript ../helpers/export_views.py 3j2w`.
+runscript ../helpers/load_views.py 3j2w
+
+# === INITIAL DISPLAY ===
+show cartoons
+show surfaces
+hide atoms
+
+# === PROTEIN COLORING ===
+# Capsid (chains i–l): orange
+color /i/j/k/l #ee8d3e
+
+# E1 glycoprotein (chains a–h): dark gray
+color /a/b/c/d/e/f/g/h #333333
+
+# E2 glycoprotein (chains m–t): start with flat light gray, then color domains below
+# Chains q–t remain as flat light gray (no domain coloring)
+color /m/n/o/p/q/r/s/t #d3d3d3
+
+# === E2 DOMAIN COLORING ===
+# Chains m–p are the E2 copies that receive domain coloring.
+# Residue numbering uses polyprotein offsets: +0, +1000, +2000, +3000 per chain.
+# N-terminal linker (501–515)
+select /m,n,o,p:501-515,1501-1515,2501-2515,3501-3515
+color sel #ffff7f
+
+# A domain (516–634)
+select /m,n,o,p:516-634,1516-1634,2516-2634,3516-3634
+color sel #ff7f7f
+
+# Arch 1 (635–672)
+select /m,n,o,p:635-672,1635-1672,2635-2672,3635-3672
+color sel #7fbe7f
+
+# B domain (673–731)
+select /m,n,o,p:673-731,1673-1731,2673-2731,3673-3731
+color sel #ffd17f
+
+# Arch 2 (732–768)
+select /m,n,o,p:732-768,1732-1768,2732-2768,3732-3768
+color sel #bf7fbe
+
+# C domain (769–842)
+select /m,n,o,p:769-842,1769-1842,2769-2842,3769-3842
+color sel #d19493
+
+select clear
+
+# Hide one asymmetric unit worth of surfaces/ribbons to expose the virion interior for top-down view
+hide /a/e/i/m/q surfaces, ribbons
+
+# === RENDERING SETTINGS ===
+preset "overall look" "publication 1 (silhouettes)"
+set bg #ffffff
+
+lighting soft
+lighting ambientIntensity 1.3
+lighting shadows false
+graphics silhouettes true color black width 1 depthJump 0.01
+graphics sel col white width 3
+
+camera mono
+
+# === IMAGE EXPORT — MAIN VIEWS ===
+view 3j2w_top_down
+save ../images/domains/3j2w_trimer_top.png width 1200 transparentBackground true supersample 9
+
+# Side view uses a slightly narrower window to match the structure's aspect ratio
+windowsize 500 600
+view 3j2w_side_full
+save ../images/domains/3j2w_trimer_side.png width 1200 transparentBackground true supersample 9
+windowsize 600 600
+
+# === IMAGE EXPORT — COLOR KEY ===
+hide all surfaces, ribbons
+windowsize 200 150
+
+key "#d19493:C Dom" "#bf7fbe:Arch 2" "#ffd17f:B Dom" "#7fbe7f:Arch 1" "#ff7f7f:A Dom" "#ffff7f:N Link" lightgrey:E2 #333333:E1 #ee8d3d:Capsid size 0.1,0.9 pos 0.03,0.03 colorTreatment distinct labelSide right/bottom fontSize 14 justification left borderWidth 1.0 labelOffset 5.0 numericLabelSpacing equal font "Helvetica Neue"
+
+save ../images/keys/3j2w_domains_key.png width 1200 transparentBackground true supersample 9
+
+windowsize 600 600
+
+# === SAVE SESSION ===
+save ../sessions/3j2w_domain_labeling.cxs includeMaps t
+
+# === OPTIONAL: MOVIE EXPORT ===
+# Uncomment to render rotation movies from top-down and side views.
+
+# view 3j2w_movie_top
+# movie record
+# turn y 2 180
+# wait 180
+# movie encode ../movies/domains/3j2w_movie_top.mp4
+
+# view 3j2w_movie_side
+# movie record
+# turn y 2 180
+# wait 180
+# movie encode ../movies/domains/3j2w_movie_side.mp4
+
+quit

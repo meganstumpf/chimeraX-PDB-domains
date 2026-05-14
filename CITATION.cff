@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+title: chimeraX-PDB-domains
+message: >-
+  If you use these scripts or the images they produce in a publication,
+  please cite this software in addition to the underlying PDB entries
+  and UCSF ChimeraX.
+type: software
+authors:
+  - given-names: Megan
+    family-names: Stumpf
+    email: stumpfsci@gmail.com
+repository-code: 'https://github.com/meganstumpf/chimeraX-PDB-domains'
+license: MIT
+keywords:
+  - ChimeraX
+  - structural biology
+  - protein visualization
+  - alphavirus
+  - CHIKV
+  - PDB
+references:
+  - type: software
+    title: UCSF ChimeraX
+    authors:
+      - family-names: Meng
+        given-names: Elaine C.
+      - family-names: Goddard
+        given-names: Thomas D.
+      - family-names: Pettersen
+        given-names: Eric F.
+      - family-names: Couch
+        given-names: Greg S.
+      - family-names: Pearson
+        given-names: Zach J.
+      - family-names: Morris
+        given-names: John H.
+      - family-names: Ferrin
+        given-names: Thomas E.
+    doi: 10.1002/pro.4792
+    year: 2023

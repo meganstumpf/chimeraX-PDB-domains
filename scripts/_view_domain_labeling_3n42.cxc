@@ -1,0 +1,119 @@
+# _view_domain_labeling_3n42.cxc
+# Colors CHIKV E2 structural domains on PDB 3N42 (E2/E3 ectodomain crystal structure).
+# Exports front and side views of the full structure and of E2 residues contacting E3.
+#
+# NOTE: Named views (e.g. 3n42_E3_front) are stored in the .cxs session file.
+# On first run, define and save them interactively before running this script.
+# On subsequent runs, the session is opened first to restore those camera positions.
+
+# === WINDOW ===
+windowsize 600 600
+
+# === LOAD STRUCTURE ===
+# Fetch fresh from RCSB. On first run, define named views interactively
+# (e.g. `view name 3n42_E3_front`) and save the session, then uncomment the
+# two lines below to restore those views on subsequent runs.
+open ../sessions/3n42_domain_labeling.cxs
+close all
+open ../cache/3n42.cif format mmcif logInfo false
+
+# === LOAD CAMERA VIEWS ===
+# Loads named views like 3n42_E3_front from views/3n42_views.cxc if it exists,
+# making the view definitions portable across machines/users without needing
+# the .cxs session. To (re)generate the file: in the ChimeraX GUI, orient the
+# camera, run `view name 3n42_E3_front` for each angle you want, then run
+# `runscript ../helpers/export_views.py 3n42`.
+runscript ../helpers/load_views.py 3n42
+
+# === INITIAL DISPLAY ===
+show cartoons
+show surfaces
+hide atoms
+
+# === PROTEIN COLORING ===
+# E3 glycoprotein (chain a): blue
+color /a #7f7fff
+
+# E2 glycoprotein (chain b): start with flat light gray, then color domains below
+color /b #d3d3d3
+
+# E1 glycoprotein (chain f): dark gray
+color /f #333333
+
+# === E2 DOMAIN COLORING ===
+# N-terminal linker (1–15)
+select /b:1-15
+color sel #ffff7f
+
+# A domain (16–134)
+select /b:16-134
+color sel #ff7f7f
+
+# Arch 1 (135–172)
+select /b:135-172
+color sel #7fbe7f
+
+# B domain (173–231)
+select /b:173-231
+color sel #ffd17f
+
+# Arch 2 (232–268)
+select /b:232-268
+color sel #bf7fbe
+
+# C domain (269–342)
+select /b:269-342
+color sel #d19493
+
+select clear
+
+# === RENDERING SETTINGS ===
+preset "overall look" "publication 1 (silhouettes)"
+set bg #ffffff
+lighting full
+lighting intensity 0.3
+lighting shadows true
+graphics silhouettes true color black width 1 depthJump 0.01
+graphics sel width 3 col white
+
+camera mono
+
+# === IMAGE EXPORT — FULL STRUCTURE VIEWS ===
+view 3n42_E3_front
+save ../images/domains/3n42_e2e3_front.png width 1200 transparentBackground true supersample 9
+
+view 3n42_E3_side
+save ../images/domains/3n42_e2e3_side.png width 1200 transparentBackground true supersample 9
+
+# === IMAGE EXPORT — E2–E3 INTERFACE CONTACT VIEWS ===
+# Hide E3 surface/ribbon, then select and highlight E2 residues contacting E3
+hide /a surfaces, ribbons
+interfaces select /B & ::polymer_type>0 contacting /A & ::polymer_type>0 areaCutoff 0
+
+view 3n42_E3_front
+save ../images/domains/3n42_e2e3_front_E3contacts.png width 1200 transparentBackground true supersample 9
+
+view 3n42_E3_side
+save ../images/domains/3n42_e2e3_side_E3contacts.png width 1200 transparentBackground true supersample 9
+
+# === SAVE SESSION ===
+save ../sessions/3n42_domain_labeling.cxs includeMaps t
+
+# === IMAGE EXPORT — COLOR KEY ===
+hide all surfaces, ribbons
+windowsize 200 150
+
+key "#d19493:C Dom" "#bf7fbe:Arch 2" "#ffd17f:B Dom" "#7fbe7f:Arch 1" "#ff7f7f:A Dom" "#ffff7f:N Link" #7f7fff:E3 lightgrey:E2 #333333:E1 #ee8d3d:Capsid size 0.1,0.9 pos 0.03,0.03 colorTreatment distinct labelSide right/bottom fontSize 14 justification left borderWidth 1.0 labelOffset 5.0 numericLabelSpacing equal font "Helvetica Neue"
+
+save ../images/keys/3n42_domains_key.png width 1200 transparentBackground true supersample 9
+
+# === OPTIONAL: MOVIE EXPORT ===
+# Uncomment to render a rotation movie from the side view.
+
+# view 3n42_movie_side
+# movie record
+# turn y 2 180
+# wait 180
+# movie encode ../movies/domains/3n42_movie_side.mp4
+
+quit

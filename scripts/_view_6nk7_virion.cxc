@@ -1,0 +1,98 @@
+# _view_6nk7_virion.cxc
+# Colors CHIKV structural proteins on PDB 6NK7 (full virion with Mxra8, biological assembly).
+# Exports four image variants: with/without Mxra8 x with/without scale bar.
+# Uses description-based chain selection (robust to assembly chain renaming).
+
+# === WINDOW ===
+windowsize 600 600
+
+# === LOAD STRUCTURE ===
+# Fetch biological assembly from RCSB; autoAssociate links chains to sequence records
+open ../sessions/6nk7_virion_labeling.cxs
+close all
+open ../cache/6nk7-assembly1.cif format mmcif logInfo false
+
+# === LOAD CAMERA VIEWS ===
+# Loads named views from views/6nk7_views.cxc if it exists. To (re)generate:
+# in GUI, orient camera, run `view name 6nk7_<viewname>` for each angle,
+# then run `runscript ../helpers/export_views.py 6nk7`.
+runscript ../helpers/load_views.py 6nk7
+
+# === INITIAL DISPLAY ===
+# Start with surfaces only (virion exterior visualization)
+hide all
+show surfaces
+
+# === RENDERING SETTINGS ===
+preset "overall look" "publication 1 (silhouettes)"
+set bg #ffffff
+
+lighting soft
+lighting ambientIntensity 1.3
+lighting shadows false
+
+graphics selection color white
+graphics sel width 2
+graphics silhouettes true color black width 1 depthJump 0.01
+
+camera mono
+
+# === PROTEIN COLORING ===
+# Color each structural protein by molecule description (chain IDs vary in biological assemblies)
+hide all
+
+# E1 glycoprotein: dark gray
+show //description="E1 glycoprotein" surfaces
+color //description="E1 glycoprotein" #404040 surfaces
+
+# E2 glycoprotein: light gray
+show //description="E2 glycoprotein" surfaces
+color //description="E2 glycoprotein" #eaeaea surfaces
+
+# E3 glycoprotein: blue
+show //description="E3 glycoprotein" surfaces
+color //description="E3 glycoprotein" #7f7fff surfaces
+
+# Capsid protein: orange
+show //description="Capsid protein" surfaces
+color //description="Capsid protein" #ee8d3d surfaces
+
+# Mxra8 receptor: shown as ribbon (not surface) to distinguish from viral proteins
+show //description="Matrix remodeling-associated protein 8" ribbons
+color //description="Matrix remodeling-associated protein 8" #6bb2ff ribbons, surfaces
+hide //description="Matrix remodeling-associated protein 8" surfaces
+
+# === IMAGE EXPORT — WITH Mxra8, NO SCALE BAR ===
+save ../images/virions/6nk7_virion_mxra8.png width 1200 transparentBackground true supersample 9
+
+# === IMAGE EXPORT — WITH Mxra8, WITH SCALE BAR ===
+scalebar 100 color #000000 xpos 0.05 ypos 0.05 thickness 2
+2dlab text '100 Å' x 0.07 y 0.025 vis t size 12
+
+save ../images/virions/6nk7_virion_mxra8_scalebar.png width 1200 transparentBackground true supersample 9
+
+# === IMAGE EXPORT — NO Mxra8, WITH SCALE BAR ===
+hide //description="Matrix remodeling-associated protein 8" ribbons
+
+save ../images/virions/6nk7_virion_scalebar.png width 1200 transparentBackground true supersample 9
+
+# === IMAGE EXPORT — NO Mxra8, NO SCALE BAR ===
+# Hide the scalebar annotation models (#2.1 = scalebar, #2.2 = text label)
+hide #2.1
+hide #2.2
+
+save ../images/virions/6nk7_virion.png width 1200 transparentBackground true supersample 9
+
+# Restore Mxra8 ribbons before saving session
+show //description="Matrix remodeling-associated protein 8" ribbons
+
+# === SAVE SESSION ===
+save ../sessions/6nk7_virion_labeling.cxs includeMaps true
+
+# === IMAGE EXPORT — COLOR KEY ===
+hide all surfaces, ribbons
+windowsize 200 100
+
+key #7f7fff:E3 #eaeaea:E2 #404040:E1 #ee8d3d:Capsid #6bb2ff:mMxra8 size 0.1,0.9 pos 0.03,0.03 colorTreatment distinct labelSide right/bottom fontSize 14 justification left borderWidth 1.0 labelOffset 5.0 numericLabelSpacing equal font "Helvetica Neue"
+
+save ../images/keys/6nk7_proteins_key.png width 1200 transparentBackground true supersample 9
