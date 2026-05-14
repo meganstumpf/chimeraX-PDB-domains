@@ -7,7 +7,7 @@
 windowsize 600 600
 
 # === LOAD STRUCTURE ===
-# Fetch biological assembly from RCSB; autoAssociate links chains to sequence records
+# Open pre-existing session; autoAssociate links chains to sequence records
 open ../sessions/6nk7_virion_labeling.cxs
 close all
 open ../cache/6nk7-assembly1.cif format mmcif logInfo false
@@ -96,3 +96,8 @@ windowsize 200 100
 key #7f7fff:E3 #eaeaea:E2 #404040:E1 #ee8d3d:Capsid #6bb2ff:mMxra8 size 0.1,0.9 pos 0.03,0.03 colorTreatment distinct labelSide right/bottom fontSize 14 justification left borderWidth 1.0 labelOffset 5.0 numericLabelSpacing equal font "Helvetica Neue"
 
 save ../images/keys/6nk7_proteins_key.png width 1200 transparentBackground true supersample 9
+
+# === MINIMIZE FILE SIZE (OPTIONAL) ===
+# close all
+
+quit
