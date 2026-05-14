@@ -17,7 +17,11 @@ ChimeraX command scripts for visualizing protein domain organization on PDB stru
 Currently focused on alphavirus (CHIKV) structural proteins, with scripts for full-virion, trimer, and isolated ectodomain PDB entries.
 
 <div align = center>
+
+***Example***  
+
 <img src="assets/3j2w_trimer_side.png" width=300px alt="*Example:* CHIKV Trimer (Side View)">
+
 </div>
 
 ---
