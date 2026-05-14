@@ -1,5 +1,5 @@
 # _view_domain_labeling_3n42.cxc
-# Colors CHIKV E2 structural domains on PDB 3N42 (E2/E3 ectodomain crystal structure).
+# Colors CHIKV structural domains on PDB 3N42 (p62/E1 heterodimeric crystal structure).
 # Exports front and side views of the full structure and of E2 residues contacting E3.
 #
 # NOTE: Named views (e.g. 3n42_E3_front) are stored in the .cxs session file.
@@ -9,7 +9,7 @@
 # === WINDOW ===
 windowsize 600 600
 
-# === LOAD STRUCTURE ===
+# === LOAD STRUCTURE/SESSION ===
 # Fetch fresh from RCSB. On first run, define named views interactively
 # (e.g. `view name 3n42_E3_front`) and save the session, then uncomment the
 # two lines below to restore those views on subsequent runs.
@@ -115,5 +115,8 @@ save ../images/keys/3n42_domains_key.png width 1200 transparentBackground true s
 # turn y 2 180
 # wait 180
 # movie encode ../movies/domains/3n42_movie_side.mp4
+
+# === MINIMIZE FILE SIZE (OPTIONAL) ===
+# close all
 
 quit

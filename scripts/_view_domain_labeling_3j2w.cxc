@@ -1,5 +1,5 @@
 # _view_domain_labeling_3j2w.cxc
-# Colors CHIKV E2 structural domains on PDB 3J2W (full virion cryo-EM structure).
+# Colors CHIKV structural domains on PDB 3J2W (full trimer cryo-EM structure).
 # Exports top-down and side views plus a color key legend.
 #
 # NOTE: Named views (e.g. 3j2w_top_down) are stored in the .cxs session file.
@@ -9,7 +9,7 @@
 # === WINDOW ===
 windowsize 600 600
 
-# === LOAD STRUCTURE ===
+# === LOAD STRUCTURE/SESSION ===
 # Fetch fresh from RCSB. On first run, define named views interactively
 # (e.g. `view name 3j2w_top_down`) and save the session, then uncomment the
 # two lines below to restore those views on subsequent runs.
@@ -122,5 +122,8 @@ save ../sessions/3j2w_domain_labeling.cxs includeMaps t
 # turn y 2 180
 # wait 180
 # movie encode ../movies/domains/3j2w_movie_side.mp4
+
+# === MINIMIZE FILE SIZE (OPTIONAL) ===
+# close all
 
 quit
