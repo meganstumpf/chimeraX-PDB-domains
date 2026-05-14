@@ -5,7 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![ChimeraX](https://img.shields.io/badge/ChimeraX-1.11%2B-blue.svg)](https://www.cgl.ucsf.edu/chimerax/)
 [![PDB](https://img.shields.io/badge/data-RCSB%20PDB-orange.svg)](https://www.rcsb.org/)
-[![Last commit](https://img.shields.io/github/last-commit/meganstumpf/chimeraX-PDB-domains.svg)](https://github.com/meganstumpf/chimeraX-PDB-domains/commits)
+![GitHub Release](https://img.shields.io/github/v/release/meganstumpf/chimeraX-PDB-domains?include_prereleases&color=green)
+![Last commit](https://img.shields.io/github/last-commit/meganstumpf/chimeraX-PDB-domains?color=red)
 
 </div>
 
